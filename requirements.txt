@@ -1,0 +1,4 @@
+aiofiles
+aioredis[hiredis]
+scrapy
+scrapy-redis

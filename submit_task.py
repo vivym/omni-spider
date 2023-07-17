@@ -12,13 +12,12 @@ async def main():
             sample = json.loads(line)
             for url in sample["answers"]:
                 qa_id = url.split("/")[-1].split(".")[0]
-                print(url, qa_id)
-                if i == 1:
-                    await redis.lpush("zyzy_qa:start_urls", json.dumps({
-                        "url": url,
-                        "meta": {"job-id": qa_id},
-                    }))
-                    exit(0)
+                await redis.lpush("zyzy_qa:start_urls", json.dumps({
+                    "url": url,
+                    "meta": {"job-id": qa_id},
+                }))
+            if i == 3000:
+                break
 
 
 if __name__ == "__main__":

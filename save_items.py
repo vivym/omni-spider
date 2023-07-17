@@ -8,7 +8,8 @@ import aioredis
 async def main():
     redis = aioredis.from_url("redis://localhost", decode_responses=True)
 
-    async with aiofiles.open("./data/51zyzy_qa_raw/qa.jsonl", "w") as f:
+    processed = 0
+    async with aiofiles.open("./data/51zyzy_qa_raw/qa.jsonl", "a") as f:
         while True:
             item = await redis.lpop("zyzy_qa:items")
             if item is None:
@@ -18,7 +19,8 @@ async def main():
 
             data = json.loads(item)
             await f.write(json.dumps(data, ensure_ascii=False) + "\n")
-            print(item["title"])
+            processed += 1
+            print(processed, data["title"])
 
 
 if __name__ == "__main__":

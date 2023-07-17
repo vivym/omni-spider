@@ -1,12 +1,16 @@
 import asyncio
 import json
+import os
 
 import aiofiles
 import aioredis
 
 
 async def main():
-    redis = aioredis.from_url("redis://localhost", decode_responses=True)
+    redis_host = os.getenv("REDIS_HOST", "localhost")
+    redis_password = os.getenv("REDIS_PASSWORD")
+
+    redis = aioredis.from_url(f"redis://:{redis_password}@{redis_host}", decode_responses=True)
 
     processed = 0
     async with aiofiles.open("./data/51zyzy_qa_raw/qa.jsonl", "a") as f:

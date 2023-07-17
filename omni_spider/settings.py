@@ -6,6 +6,8 @@
 #     https://docs.scrapy.org/en/latest/topics/settings.html
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
+import os
+
 
 BOT_NAME = "omni_spider"
 
@@ -24,7 +26,7 @@ DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
 SCHEDULER = "scrapy_redis.scheduler.Scheduler"
 SCHEDULER_PERSIST = True
 
-REDIS_URL = "redis://localhost"
+REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379")
 
 LOG_LEVEL = "INFO"
 
@@ -39,7 +41,7 @@ CONCURRENT_REQUESTS = 16
 # See also autothrottle settings and docs
 #DOWNLOAD_DELAY = 3
 # The download delay setting will honor only one of:
-CONCURRENT_REQUESTS_PER_DOMAIN = 4
+CONCURRENT_REQUESTS_PER_DOMAIN = 2
 
 # Disable cookies (enabled by default)
 COOKIES_ENABLED = False
